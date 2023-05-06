@@ -1,8 +1,8 @@
 {
 "app_id": "wx4fb18def51bb93f8",
 "app_secret": "2cd99627ae8b2cd46c7e200c09be6524",
-"template_id": "DYJNF7b_Qqn5Xu4Dm8qk-ioXgSNgdPGp1TdaiaBMuac",
-"user": ["odktg6SW6cmdDK5eMrbrqQ8U_hl0"],
+"template_id": "tUAk-WH9d9P41yJ--npavudVzTSXV3gmKTq1lI66-ys",
+"user": ["odktg6d4byQDeTMVNd8MiIXY5eWY","odktg6SW6cmdDK5eMrbrqQ8U_hl0"],
 
 "weather_key": "ee5b6586a51e45e89d0a192118987ac3",
 "tian_api": "76ec2849366eaaf84ac271e64b0c5505",
