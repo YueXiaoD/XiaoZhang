@@ -67,6 +67,8 @@ def get_weather(region):
     if response["code"] == "200":
         # 空气质量
         category = response["now"]["category"]
+        # pm2.5
+        pm2p5 = response["now"]["pm2p5"]
     else:
         # 国外城市获取不到数据
         category = ""
@@ -77,7 +79,7 @@ def get_weather(region):
     proposal = ""
     if response["code"] == "200":
         proposal += response["daily"][0]["text"]
-    return weather, temp, max_temp, min_temp, wind_dir, sunrise, sunset, category, proposal
+    return weather, temp, max_temp, min_temp, wind_dir, sunrise, sunset, category, pm2p5, proposal
 
 
 def get_tianhang():
@@ -151,7 +153,7 @@ def get_ciba():
 
 
 def send_message(to_user, access_token, region_name, weather, temp, wind_dir, note_ch, note_en, max_temp, min_temp,
-                 sunrise, sunset, category, proposal, chp):
+                 sunrise, sunset, category, pm2p5, proposal, chp):
     url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={}".format(access_token)
     week_list = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
     year = localtime().tm_year
@@ -175,6 +177,55 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
         "touser": to_user,
         "template_id": config["template_id"],
         "url": "http://weixin.qq.com/download",
+        "topcolor": "#FF0000",
+        "data": {
+            "date": {
+                "value": "{} {}".format(today, week),
+            },
+            "region": {
+                "value": region_name,
+            },
+            "weather": {
+                "value": weather,
+            },
+            "temp": {
+                "value": temp,
+            },
+            "wind_dir": {
+                "value": wind_dir,
+            },
+            "love_day": {
+                "value": love_days,
+            },
+            "note_en": {
+                "value": note_en,
+            },
+            "note_ch": {
+                "value": note_ch,
+            },
+            "max_temp": {
+                "value": max_temp,
+            },
+            "min_temp": {
+                "value": min_temp,
+            },
+            "sunrise": {
+                "value": sunrise,
+            },
+            "sunset": {
+                "value": sunset,
+            },
+            "category": {
+                "value": category,
+            },
+            "proposal": {
+                "value": proposal,
+            },
+            "chp": {
+                "value": chp,
+            },
+
+        }
     }
     for key, value in birthdays.items():
         # 获取距离下次生日的时间
@@ -184,7 +235,7 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
         else:
             birthday_data = "距离{}的生日还有{}天".format(value["name"], birth_day)
         # 将生日数据插入data
-        #data["data"][key] = {"value": birthday_data}
+        data["data"][key] = {"value": birthday_data}
     headers = {
         'Content-Type': 'application/json',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
@@ -222,7 +273,7 @@ if __name__ == "__main__":
     users = config["user"]
     # 传入地区获取天气信息
     region = config["region"]
-    weather, temp, max_temp, min_temp, wind_dir, sunrise, sunset, category, proposal = get_weather(region)
+    weather, temp, max_temp, min_temp, wind_dir, sunrise, sunset, category, pm2p5, proposal = get_weather(region)
     note_ch = config["note_ch"]
     note_en = config["note_en"]
     if note_ch == "" and note_en == "":
@@ -232,5 +283,5 @@ if __name__ == "__main__":
     # 公众号推送消息
     for user in users:
         send_message(user, accessToken, region, weather, temp, wind_dir, note_ch, note_en, max_temp, min_temp, sunrise,
-                     sunset, category, proposal, chp)
+                     sunset, category, pm2p5, proposal, chp)
     os.system("pause")
