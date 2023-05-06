@@ -1,7 +1,7 @@
 {
 "app_id": "wx4fb18def51bb93f8",
 "app_secret": "2cd99627ae8b2cd46c7e200c09be6524",
-"template_id": "cdhlqmOKQ_59NdlcmHyTKRMe48mwj1trAfigriwcYH8",
+"template_id": "3JKUe4WLQdGDjjS4SUzpsvNhAspZ05iZn85QuwBpA5c",
 "user": ["odktg6SW6cmdDK5eMrbrqQ8U_hl0"],
 
 "weather_key": "ee5b6586a51e45e89d0a192118987ac3",
