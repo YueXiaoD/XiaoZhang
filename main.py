@@ -67,8 +67,6 @@ def get_weather(region):
     if response["code"] == "200":
         # 空气质量
         category = response["now"]["category"]
-        # pm2.5
-        pm2p5 = response["now"]["pm2p5"]
     else:
         # 国外城市获取不到数据
         category = ""
@@ -186,7 +184,7 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
         else:
             birthday_data = "距离{}的生日还有{}天".format(value["name"], birth_day)
         # 将生日数据插入data
-        data["data"][key] = {"value": birthday_data, "color": get_color()}
+        data["data"][key] = {"value": birthday_data}
     headers = {
         'Content-Type': 'application/json',
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
